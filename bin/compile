@@ -57,8 +57,26 @@ else
   BUILD_PACK_VERSION="20151031-1711"
 fi
 
-S3_BUCKET="heroku-buildpack-r"
-R_BINARIES="http://${S3_BUCKET}.s3.amazonaws.com/${STACK}/R-${R_VERSION}-binaries-${BUILD_PACK_VERSION}.tar.gz"
+# read in buildback cloud bucket if file exists
+if [[ -f $BUILD_DIR/.r-cloud-bucket ]]; then
+  S3_BUCKET=`read_var $BUILD_DIR/.r-cloud-bucket`
+else
+  S3_BUCKET="heroku-buildpack-r"
+fi
+
+# read in buildback cloud host if file exists
+if [[ -f $BUILD_DIR/.r-cloud-host ]]; then
+  CLOUD_HOST=`read_var $BUILD_DIR/.r-cloud-host`
+else
+  CLOUD_HOST="s3.amazonaws.com"
+fi
+
+# read in buildback cloud stack if file exists
+if [[ -f $BUILD_DIR/.r-cloud-stack ]]; then
+  STACK=`read_var $BUILD_DIR/.r-cloud-stack`
+fi
+
+R_BINARIES="http://${S3_BUCKET}.{CLOUD_HOST}/${STACK}/R-${R_VERSION}-binaries-${BUILD_PACK_VERSION}.tar.gz"
 
 VENDOR_DIR="$BUILD_DIR/vendor"
 CRAN_MIRROR="http://cran.revolutionanalytics.com"

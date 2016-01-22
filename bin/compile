@@ -76,7 +76,7 @@ if [[ -f $BUILD_DIR/.r-cloud-stack ]]; then
   STACK=`read_var $BUILD_DIR/.r-cloud-stack`
 fi
 
-R_BINARIES="http://${S3_BUCKET}.{CLOUD_HOST}/${STACK}/R-${R_VERSION}-binaries-${BUILD_PACK_VERSION}.tar.gz"
+R_BINARIES="http://${S3_BUCKET}.${CLOUD_HOST}/${STACK}/R-${R_VERSION}-binaries-${BUILD_PACK_VERSION}.tar.gz"
 
 VENDOR_DIR="$BUILD_DIR/vendor"
 CRAN_MIRROR="http://cran.revolutionanalytics.com"

@@ -83,7 +83,14 @@ else
   COMPRESSION="gz"
 fi
 
-R_BINARIES="http://${S3_BUCKET}.${CLOUD_HOST}/${STACK}/R-${R_VERSION}-binaries-${BUILD_PACK_VERSION}.tar.${COMPRESSION}"
+# read in buildback cloud scheme if file exists
+if [[ -f $BUILD_DIR/.r-cloud-scheme ]]; then
+  SCHEME=`read_var $BUILD_DIR/.r-cloud-scheme`
+else
+  SCHEME="http"
+fi
+
+R_BINARIES="${$SCHEME}://${S3_BUCKET}.${CLOUD_HOST}/${STACK}/R-${R_VERSION}-binaries-${BUILD_PACK_VERSION}.tar.${COMPRESSION}"
 
 VENDOR_DIR="$BUILD_DIR/vendor"
 CRAN_MIRROR="http://cran.revolutionanalytics.com"
